@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MR KPR — Turunkan cicilan KPR Anda</title>
+<style>
+:root{
+  --ink:#101d33; --ink2:#5a6b85; --ink3:#8a97ab; --line:#e5eaf2; --bg:#eef2f8;
+  --paper:#fff; --brand:#0f4d8a; --brand2:#1b6fb8; --brandsoft:#e8f1fa;
+  --hi:#0d7a5f; --hibg:#e3f4ee; --mid:#96650f; --midbg:#fdf2df; --alt:#7038a0; --altbg:#f3ebfa;
+  --shadow:0 1px 3px rgba(16,29,51,.06),0 8px 24px rgba(16,29,51,.06);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#dde4ee;color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.5;font-size:15px}
+#frame{max-width:430px;margin:0 auto;min-height:100vh;background:var(--bg);
+  position:relative;display:flex;flex-direction:column;box-shadow:0 0 60px rgba(16,29,51,.18)}
+@media(min-width:520px){#frame{min-height:100vh}}
+
+/* ---------- ROLE PICKER ---------- */
+/* ---------- LANDING ---------- */
+#land{flex:1;background:var(--paper)}
+.lhero{background:linear-gradient(170deg,#0f4d8a 0%,#0b3a69 55%,#092f56 100%);color:#fff;padding:34px 22px 30px}
+.lhero .mark{margin-bottom:20px}
+.lhero .tag{display:inline-block;background:rgba(255,255,255,.14);padding:5px 11px;border-radius:20px;font-size:11.5px;margin-bottom:13px}
+.lhero h1{font-size:27px;line-height:1.25;margin:0 0 10px;letter-spacing:-.5px}
+.lhero h1 em{font-style:normal;color:#8fc7f5}
+.lhero p{margin:0 0 20px;font-size:14px;opacity:.78;line-height:1.65}
+.lbtn{width:100%;background:#fff;color:var(--brand);border:0;padding:15px;border-radius:13px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+.lnum{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:20px}
+.lnum div{background:rgba(255,255,255,.1);border-radius:12px;padding:11px 10px;text-align:center}
+.lnum b{display:block;font-size:17px} .lnum span{font-size:10.5px;opacity:.72;line-height:1.35;display:block;margin-top:2px}
+.lsec{padding:28px 22px;border-bottom:1px solid var(--line)}
+.lsec h2{font-size:19px;margin:0 0 6px;letter-spacing:-.3px}
+.lsec .lead{color:var(--ink2);font-size:13.5px;margin:0 0 18px;line-height:1.65}
+.lstep{display:flex;gap:13px;margin-bottom:16px}
+.lstep .n{width:27px;height:27px;border-radius:9px;background:var(--brandsoft);color:var(--brand);flex:none;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.lstep b{display:block;font-size:14px;margin-bottom:2px}
+.lstep p{margin:0;font-size:13px;color:var(--ink2);line-height:1.6}
+.quote{background:var(--bg);border-radius:14px;padding:16px;font-size:13.5px;line-height:1.65;color:var(--ink2);margin-bottom:11px}
+.quote b{display:block;color:var(--ink);font-size:12px;margin-top:8px;font-weight:600}
+.lfoot{padding:26px 22px 34px;text-align:center;background:var(--bg)}
+.lfoot p{font-size:12px;color:var(--ink3);margin:14px 0 0;line-height:1.6}
+
+#picker{flex:1;display:none;flex-direction:column;justify-content:center;padding:34px 22px;
+  background:linear-gradient(170deg,#0f4d8a 0%,#0b3a69 60%,#092f56 100%);color:#fff}
+.mark{width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;margin-bottom:18px}
+#picker h1{font-size:25px;margin:0 0 6px;letter-spacing:-.3px}
+#picker p.lead{margin:0 0 26px;opacity:.72;font-size:14px;line-height:1.6}
+.rolebtn{width:100%;text-align:left;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);
+  color:#fff;border-radius:15px;padding:15px 16px;margin-bottom:11px;cursor:pointer;display:flex;gap:13px;align-items:center;
+  font-family:inherit;transition:background .15s}
+.rolebtn:hover{background:rgba(255,255,255,.16)}
+.rolebtn .ic{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.16);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:18px}
+.rolebtn b{display:block;font-size:15px}
+.rolebtn span{display:block;font-size:12.5px;opacity:.7;line-height:1.45;margin-top:2px}
+#picker .foot{margin-top:22px;font-size:11.5px;opacity:.55;text-align:center;line-height:1.6}
+
+/* ---------- APP SHELL ---------- */
+#app{flex:1;display:none;flex-direction:column;min-height:100vh}
+.topbar{background:var(--paper);border-bottom:1px solid var(--line);padding:14px 18px;
+  display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20}
+.topbar .who{font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.7px}
+.topbar h2{margin:1px 0 0;font-size:17px;letter-spacing:-.2px}
+.topbar button{background:var(--bg);border:0;color:var(--ink2);font-size:12px;padding:7px 11px;border-radius:8px;cursor:pointer;font-family:inherit}
+.body{flex:1;padding:16px 16px 92px;overflow-y:auto}
+.nav{position:sticky;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);display:flex;padding:7px 6px calc(9px + env(safe-area-inset-bottom))}
+.nav button{flex:1;background:none;border:0;padding:6px 2px;cursor:pointer;color:var(--ink3);
+  font-size:10.5px;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:3px}
+.nav button .ni{font-size:19px;line-height:1}
+.nav button.on{color:var(--brand);font-weight:600}
+
+/* ---------- COMPONENTS ---------- */
+.card{background:var(--paper);border-radius:16px;padding:17px;margin-bottom:13px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 3px;font-size:15.5px}
+.card .sub{margin:0 0 14px;color:var(--ink2);font-size:13px;line-height:1.55}
+label{display:block;font-size:12.5px;font-weight:600;margin:13px 0 5px}
+label .hint{display:block;font-weight:400;color:var(--ink3);font-size:11.5px;margin-top:2px;line-height:1.4}
+input,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;font-size:15px;
+  font-family:inherit;background:#fbfcfe;color:var(--ink);appearance:none}
+input:focus,select:focus{outline:0;border-color:var(--brand2);background:#fff;box-shadow:0 0 0 3px var(--brandsoft)}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6b85' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 13px center}
+.btn{width:100%;background:var(--brand);color:#fff;border:0;padding:14px;border-radius:12px;
+  font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:16px}
+.btn:active{transform:scale(.99)}
+.btn.sec{background:var(--paper);color:var(--brand);border:1px solid var(--line);margin-top:9px}
+.err{color:#b3261e;font-size:12.5px;margin:9px 0 0}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.p-hi{background:var(--hibg);color:var(--hi)} .p-mid{background:var(--midbg);color:var(--mid)} .p-alt{background:var(--altbg);color:var(--alt)}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+.hero{background:linear-gradient(160deg,#1b6fb8,#0f4d8a);color:#fff;border-radius:18px;padding:20px;margin-bottom:13px;box-shadow:var(--shadow)}
+.hero .lbl{font-size:12.5px;opacity:.8}
+.hero .big{font-size:29px;font-weight:700;margin:5px 0 2px;letter-spacing:-.6px}
+.hero .side{font-size:12.5px;opacity:.85}
+.hero .grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px}
+.hero .grid div{background:rgba(255,255,255,.12);border-radius:11px;padding:10px 11px}
+.hero .grid span{display:block;font-size:10.5px;opacity:.75;margin-bottom:1px}
+.hero .grid b{font-size:14.5px}
+.disc{background:rgba(255,255,255,.13);border-radius:11px;padding:11px 12px;font-size:11.5px;margin-top:14px;line-height:1.55}
+
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px}
+.stat{background:var(--paper);border-radius:14px;padding:13px 14px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:23px;letter-spacing:-.5px}
+.stat span{font-size:11.5px;color:var(--ink2)}
+.stat.dark{background:var(--ink);color:#fff;grid-column:span 2}
+.stat.dark span{color:rgba(255,255,255,.65)}
+.stat.dark b{font-size:31px}
+
+.chips{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px;margin-bottom:12px}
+.chips button{flex:none;background:var(--paper);border:1px solid var(--line);color:var(--ink2);
+  padding:7px 13px;border-radius:20px;font-size:12.5px;cursor:pointer;font-family:inherit}
+.chips button.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+.item{background:var(--paper);border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:var(--shadow);cursor:pointer;
+  border-left:3px solid transparent}
+.item.hi{border-left-color:#0d7a5f} .item.mid{border-left-color:#c08a1f} .item.alt{border-left-color:#7038a0}
+.item .r1{display:flex;justify-content:space-between;align-items:flex-start;gap:9px}
+.item .nm{font-weight:600;font-size:14.5px}
+.item .meta{font-size:12px;color:var(--ink3);margin-top:2px}
+.item .r2{display:flex;justify-content:space-between;align-items:center;margin-top:11px;
+  padding-top:11px;border-top:1px solid var(--line);font-size:12.5px}
+.item .r2 b{color:var(--hi);font-size:14px}
+.item .stage{color:var(--ink2)}
+
+.empty{text-align:center;color:var(--ink3);padding:46px 18px;font-size:13.5px;line-height:1.6}
+.empty .em{font-size:32px;display:block;margin-bottom:10px;opacity:.5}
+
+.sheet{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(16,29,51,.5)}
+.sheet .inner{background:var(--bg);width:100%;max-width:430px;max-height:92vh;overflow-y:auto;
+  border-radius:20px 20px 0 0;padding:8px 16px calc(24px + env(safe-area-inset-bottom))}
+.grab{width:38px;height:4px;background:#c9d3e0;border-radius:3px;margin:8px auto 14px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:13.5px}
+.kv div:nth-child(odd){color:var(--ink2);white-space:nowrap}
+.kv div:nth-child(even){text-align:right;font-weight:500}
+.reason{background:var(--brandsoft);border-radius:12px;padding:13px 14px;font-size:13px;line-height:1.6;margin-bottom:13px}
+.reason b{display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--brand)}
+.reason ul{margin:0;padding-left:17px} .reason li{margin:5px 0}
+
+.track{margin-top:4px}
+.trow{display:flex;gap:11px;align-items:flex-start;padding:9px 0;cursor:pointer}
+.trow .bul{width:19px;height:19px;border-radius:50%;border:2px solid var(--line);flex:none;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;background:#fff}
+.trow.done .bul{background:var(--hi);border-color:var(--hi)}
+.trow.now .bul{background:var(--brand);border-color:var(--brand)}
+.trow .tx{font-size:13.5px;color:var(--ink3)}
+.trow.done .tx,.trow.now .tx{color:var(--ink)}
+.trow.now .tx{font-weight:600}
+
+.notice{background:#fdf2df;border:1px solid #f2ddb0;color:#7c5310;padding:11px 13px;border-radius:12px;font-size:12px;margin-bottom:13px;line-height:1.55}
+.rules{font-size:13px;color:var(--ink2);margin:0;padding-left:18px} .rules li{margin:7px 0}
+.q{font-size:13.5px;line-height:1.65;color:var(--ink2)}
+</style>
+</head>
+<body>
+<div id="frame">
+
+<!-- ================= LANDING ================= -->
+<div id="land">
+  <div class="lhero">
+    <div class="mark">MR</div>
+    <div class="tag">Konsultan penurunan cicilan KPR</div>
+    <h1>Cicilan KPR Anda naik.<br><em>Itu masih bisa diturunkan.</em></h1>
+    <p>Setelah masa bunga tetap habis, cicilan ikut melonjak dan banyak orang menganggapnya tidak bisa diapa-apakan. Kami mengurus perpindahannya dari awal sampai akad. Anda tidak mengeluarkan biaya apa pun kepada kami.</p>
+    <button class="lbtn" onclick="keLogin()">Masuk ke aplikasi</button>
+    <div class="lnum">
+      <div><b>5%</b><span>patokan penawaran kami</span></div>
+      <div><b>Rp 0</b><span>biaya jasa ke klien</span></div>
+      <div><b>Eks bankir</b><span>konsultan penangan KPR</span></div>
+    </div>
+  </div>
+
+  <div class="lsec">
+    <h2>Kenapa cicilan Anda naik</h2>
+    <p class="lead">Bukan salah Anda, dan bukan sesuatu yang harus diterima begitu saja.</p>
+    <div class="lstep"><div class="n">1</div><div><b>Masa bunga tetap habis</b><p>KPR Anda mulai dengan bunga tetap selama beberapa tahun pertama. Setelah itu berakhir, tanpa ada yang mengingatkan.</p></div></div>
+    <div class="lstep"><div class="n">2</div><div><b>Bunga berubah mengikuti kebijakan bank</b><p>Bunga floating bisa jauh lebih tinggi dari bunga awal Anda. Cicilan ikut naik, kadang cukup tajam.</p></div></div>
+    <div class="lstep"><div class="n">3</div><div><b>Anda bertahan karena tidak tahu ada pilihan</b><p>Padahal KPR yang sudah berjalan bisa dipindahkan ke bank lain dengan penawaran yang lebih rendah.</p></div></div>
+  </div>
+
+  <div class="lsec">
+    <h2>Yang kami kerjakan</h2>
+    <p class="lead">Bukan kalkulator. Kami yang mengurus berkasnya.</p>
+    <div class="lstep"><div class="n">✓</div><div><b>Menilai kelayakan kasus Anda</b><p>Konsultan kami mantan pegawai bank yang menangani KPR, jadi paham cara kerjanya dari dalam.</p></div></div>
+    <div class="lstep"><div class="n">✓</div><div><b>Mengurus dokumen dari awal sampai akad</b><p>Bagian yang paling melelahkan dan paling sering membuat orang menyerah di tengah jalan.</p></div></div>
+    <div class="lstep"><div class="n">✓</div><div><b>Menyambungkan ke bank yang tepat</b><p>Kami tahu bank mana yang sedang membuka penawaran untuk profil seperti Anda.</p></div></div>
+    <div class="lstep"><div class="n">✓</div><div><b>Menemani sampai cicilan benar-benar turun</b><p>Atau tenor Anda jadi lebih singkat, tergantung mana yang lebih Anda butuhkan.</p></div></div>
+  </div>
+
+  <div class="lsec">
+    <h2>Kalau ternyata belum cocok</h2>
+    <p class="lead">Kami akan bilang apa adanya.</p>
+    <div class="quote">Tidak semua KPR layak dipindahkan. Kalau KPR Anda baru berjalan sebentar, atau selisih bunganya tipis, biaya pindahnya bisa menelan seluruh penghematan. Dalam kasus seperti itu kami akan mengatakannya terus terang dan menawarkan jalur lain, misalnya renegosiasi ke bank tempat KPR Anda berjalan sekarang.
+      <b>Ini yang membedakan konsultan dari penjual.</b></div>
+  </div>
+
+  <div class="lfoot">
+    <button class="lbtn" style="background:var(--brand);color:#fff" onclick="keLogin()">Cek potensi penurunan cicilan</button>
+    <p>Prototype uji coba MBCL Cohort 2 · Juli 2026<br>Belum ada sistem masuk. Jangan memasukkan data pribadi asli.</p>
+  </div>
+</div>
+
+<!-- ================= ROLE PICKER ================= -->
+<div id="picker">
+  <div class="mark">MR</div>
+  <h1>Selamat datang di MR KPR</h1>
+  <p class="lead">Cicilan KPR naik setelah masa fixed habis? Kami mengurus perpindahannya dari awal sampai akad. Pilih dulu, Anda masuk sebagai siapa hari ini?</p>
+
+  <button class="rolebtn" onclick="masuk('klien')">
+    <div class="ic">🏠</div>
+    <div><b>Saya Pemilik KPR</b><span>Cek potensi penurunan cicilan dan pantau proses pengurusannya</span></div>
+  </button>
+  <button class="rolebtn" onclick="masuk('konsultan')">
+    <div class="ic">📋</div>
+    <div><b>Saya Konsultan</b><span>Nilai kelayakan klien, tetapkan jalur, gerakkan tahapan sampai akad</span></div>
+  </button>
+  <button class="rolebtn" onclick="masuk('bank')">
+    <div class="ic">🏦</div>
+    <div><b>Saya Mitra Bank</b><span>Lihat calon debitur yang sudah tersaring, tanpa data pribadi</span></div>
+  </button>
+
+  <div class="foot"><a href="#" onclick="keLanding();return false" style="color:rgba(255,255,255,.75)">&larr; Kembali ke halaman utama</a><br><br>Prototype uji coba MBCL Cohort 2.<br>Belum ada sistem masuk. Jangan memasukkan data pribadi asli.</div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app">
+  <div class="topbar">
+    <div><div class="who" id="tWho"></div><h2 id="tTitle"></h2></div>
+    <button onclick="keluar()">Ganti peran</button>
+  </div>
+  <div class="body" id="body"></div>
+  <div class="nav" id="nav"></div>
+</div>
+
+</div>
+<div id="sheetWrap"></div>
+
+<script>
+/* ================= DATA ================= */
+var PATOKAN = 5;
+/* GANTI dengan nomor WhatsApp MR KPR yang sebenarnya, format 62xxxxxxxxxx tanpa tanda + */
+var WA_MRKPR = '6285178243625';
+var TAHAP = ['Baru masuk','Diverifikasi konsultan','Kumpul dokumen','Diajukan ke bank','Menunggu keputusan','Selesai akad'];
+var klien = [], idSeq = 1, peran = null, layar = null, filterJalur = 'all';
+var hasil = null, kasusSaya = null;
+
+var NAV = {
+  klien:[['cek','🧮','Cek Cicilan'],['status','📍','Proses Saya'],['bantu','💬','Bantuan']],
+  konsultan:[['beranda','🏠','Beranda'],['daftar','👥','Klien'],['tren','📈','Tren'],['aturan','⚙️','Aturan']],
+  bank:[['prospek','📊','Prospek'],['bantu','ℹ️','Tentang']]
+};
+var TITLE = {
+  cek:'Cek potensi',status:'Proses saya',bantu:'Bantuan',
+  beranda:'Ringkasan hari ini',daftar:'Daftar klien',tren:'Pola & tren',aturan:'Aturan penyaringan',
+  prospek:'Calon debitur tersaring'
+};
+var WHO = {klien:'Pemilik KPR',konsultan:'Konsultan MR KPR',bank:'Mitra Bank'};
+
+/* ================= HITUNG ================= */
+function rp(n){ return isFinite(n) ? 'Rp '+Math.round(n).toLocaleString('id-ID') : '—'; }
+function rpk(n){
+  if(!isFinite(n)) return '—';
+  if(n>=1e9) return 'Rp '+(n/1e9).toFixed(n>=1e10?0:1).replace('.',',')+' M';
+  if(n>=1e6) return 'Rp '+(n/1e6).toFixed(n>=1e8?0:1).replace('.',',')+' jt';
+  return rp(n);
+}
+function angsuran(p,b,m){ var i=b/100/12; return i===0?p/m:p*i/(1-Math.pow(1+i,-m)); }
+function sisaPokok(c,b,m){ var i=b/100/12; return i===0?c*m:c*(1-Math.pow(1+i,-m))/i; }
+function esc(s){ return String(s).replace(/[<>&"]/g,function(c){return({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'})[c]}); }
+function inisial(n){
+  return n.replace(/\s*\(contoh\)\s*/,'').split(/\s+/).map(function(w){return w[0]?w[0].toUpperCase()+'.':''}).join(' ');
+}
+
+/* ================= MESIN PENILAIAN ================= */
+function nilai(d){
+  var a=[], j='hi';
+  var umur=(new Date().getFullYear())-d.tahunAkad;
+  var selisih=d.bunga-PATOKAN;
+  if(d.masalahLain==='ya'){ j='alt'; a.push('Ada masalah finansial lain di perbankan di luar KPR. Perlu dibereskan dulu atau ditempuh jalur selain take over.'); }
+  if(d.riwayat==='Sedang menunggak'){ j='alt'; a.push('KPR sedang menunggak. Bank tujuan hampir pasti menolak. Arahkan ke renegosiasi di bank existing.'); }
+  if(umur<5){ j='alt'; a.push('KPR baru berjalan '+umur+' tahun, di bawah syarat minimal 5 tahun.'); }
+  if(j!=='alt'){
+    if(d.plafon<1e9){ j='mid'; a.push('Plafon awal '+rpk(d.plafon)+', di bawah batas Rp 1 miliar. Tetap bisa diproses tapi nilainya lebih kecil.'); }
+    if(selisih<3){ j='mid'; a.push('Selisih bunga hanya '+selisih.toFixed(1)+'%, di bawah batas 3% yang biasa diusahakan.'); }
+    if(d.riwayat==='Pernah telat, kini lancar') a.push('Pernah telat bayar. Perlu diverifikasi manual seberapa jauh dan kapan.');
+    if(d.penghasilan==='Karyawan kontrak'||d.penghasilan==='Wiraswasta') a.push('Status penghasilan '+d.penghasilan.toLowerCase()+'. Sebagian bank menuntut dokumen tambahan.');
+  }
+  if(j==='hi'&&!a.length) a.push('Memenuhi seluruh syarat: KPR berjalan '+umur+' tahun, plafon awal '+rpk(d.plafon)+', selisih bunga '+selisih.toFixed(1)+'%.');
+  return {jalur:j,alasan:a,umur:umur,selisih:selisih};
+}
+function labelJalur(j){
+  return j==='hi'?'<span class="pill p-hi"><i class="dot"></i>Prioritas tinggi</span>'
+       :j==='mid'?'<span class="pill p-mid"><i class="dot"></i>Antre</span>'
+       :'<span class="pill p-alt"><i class="dot"></i>Pendekatan lain</span>';
+}
+
+/* ================= NAVIGASI ================= */
+function keLogin(){
+  document.getElementById('land').style.display='none';
+  document.getElementById('picker').style.display='flex';
+  window.scrollTo(0,0);
+}
+function keLanding(){
+  document.getElementById('picker').style.display='none';
+  document.getElementById('land').style.display='block';
+  window.scrollTo(0,0);
+}
+function masuk(p){
+  peran=p; layar=NAV[p][0][0];
+  document.getElementById('picker').style.display='none';
+  document.getElementById('app').style.display='flex';
+  render();
+}
+function keluar(){
+  peran=null; hasil=null;
+  document.getElementById('app').style.display='none';
+  document.getElementById('picker').style.display='flex';
+  window.scrollTo(0,0);
+}
+function go(s){ layar=s; render(); window.scrollTo(0,0); }
+
+function render(){
+  document.getElementById('tWho').textContent=WHO[peran];
+  document.getElementById('tTitle').textContent=TITLE[layar]||'';
+  document.getElementById('nav').innerHTML=NAV[peran].map(function(n){
+    return '<button class="'+(layar===n[0]?'on':'')+'" onclick="go(\''+n[0]+'\')"><span class="ni">'+n[1]+'</span>'+n[2]+'</button>';
+  }).join('');
+  var b=document.getElementById('body');
+  if(peran==='klien')      b.innerHTML = layar==='cek'?scKlienCek():layar==='status'?scKlienStatus():scBantuKlien();
+  else if(peran==='konsultan') b.innerHTML = layar==='beranda'?scBeranda():layar==='daftar'?scDaftar():layar==='tren'?scTren():scAturan();
+  else                     b.innerHTML = layar==='prospek'?scProspek():scTentangBank();
+}
+
+/* ================= LAYAR KLIEN ================= */
+function scKlienCek(){
+  if(!hasil) return ''
+  + '<div class="card"><h3>Berapa cicilan Anda bisa turun?</h3>'
+  + '<p class="sub">Isi tiga angka ini. Anda langsung melihat perkiraannya, tanpa perlu memberi nomor telepon dulu.</p>'
+  + '<label>Cicilan per bulan sekarang (Rp)<span class="hint">Angka yang Anda bayar bulan ini</span></label>'
+  + '<input type="number" id="i_cicilan" inputmode="numeric" placeholder="12500000">'
+  + '<label>Bunga berjalan sekarang (%)<span class="hint">Bunga floating yang berlaku, ada di surat bank</span></label>'
+  + '<input type="number" id="i_bunga" step="0.1" inputmode="decimal" placeholder="10">'
+  + '<label>Sisa tenor (tahun)<span class="hint">Berapa tahun lagi KPR Anda berjalan</span></label>'
+  + '<input type="number" id="i_tenor" inputmode="numeric" placeholder="12">'
+  + '<button class="btn" onclick="hitung()">Lihat perkiraannya</button>'
+  + '<p class="err" id="e1"></p></div>';
+
+  if(kasusSaya) return scKlienStatus();
+
+  var h = hasil;
+  return ''
+  + '<div class="hero"><div class="lbl">Perkiraan cicilan Anda bisa turun</div>'
+  + '<div class="big">'+rp(h.hemat)+'</div><div class="side">per bulan, sekitar '+rpk(h.hemat*12)+' setahun</div>'
+  + '<div class="grid">'
+  + '<div><span>Cicilan sekarang</span><b>'+rpk(h.cicilan)+'</b></div>'
+  + '<div><span>Perkiraan baru</span><b>'+rpk(h.cicilanBaru)+'</b></div>'
+  + '<div><span>Bunga Anda</span><b>'+h.bunga+'%</b></div>'
+  + '<div><span>Patokan kami</span><b>'+PATOKAN+'%</b></div></div>'
+  + '<div class="disc"><b>Ini estimasi, bukan janji.</b> Angka sebenarnya ditentukan bank setelah penilaian. Patokan '+PATOKAN+'% adalah kisaran yang biasa kami usahakan berdasarkan pengalaman menangani klien, bukan angka resmi yang berlaku untuk semua orang.</div></div>'
+
+  + '<div class="card"><h3>Mau kami bantu mengurusnya?</h3>'
+  + '<p class="sub">Pengurusan dokumen dari awal sampai akad kami yang kerjakan. Anda tidak mengeluarkan biaya apa pun ke kami.</p>'
+  + '<label>Nama</label><input id="i_nama" placeholder="Nama lengkap">'
+  + '<label>Nomor WhatsApp</label><input id="i_wa" inputmode="tel" placeholder="08xxxxxxxxxx">'
+  + '<label>Bank KPR saat ini</label><select id="i_bank"><option value="">Pilih bank</option>'
+  + ['BCA','Mandiri','BNI','BRI','BTN','CIMB Niaga','Permata','Danamon','Lainnya'].map(function(x){return '<option>'+x+'</option>'}).join('')
+  + '</select>'
+  + '<label>Tahun akad KPR<span class="hint">Tahun Anda menandatangani KPR</span></label><input type="number" id="i_akad" inputmode="numeric" placeholder="2018">'
+  + '<label>Plafon awal saat akad (Rp)<span class="hint">Nilai KPR saat pertama diambil, bukan sisanya sekarang</span></label><input type="number" id="i_plafon" inputmode="numeric" placeholder="1500000000">'
+  + '<label>Status penghasilan</label><select id="i_hasil"><option value="">Pilih</option><option>Karyawan tetap</option><option>Karyawan kontrak</option><option>Wiraswasta</option><option>Profesional</option></select>'
+  + '<label>Riwayat pembayaran KPR</label><select id="i_riwayat"><option value="">Pilih</option><option>Selalu lancar</option><option>Pernah telat, kini lancar</option><option>Sedang menunggak</option></select>'
+  + '<label>Ada masalah finansial lain di perbankan?<span class="hint">Di luar KPR: kredit macet, restrukturisasi, kartu kredit bermasalah</span></label>'
+  + '<select id="i_lain"><option value="">Pilih</option><option value="tidak">Tidak ada</option><option value="ya">Ada</option></select>'
+  + '<button class="btn" onclick="kirim()">Kirim ke konsultan</button>'
+  + '<button class="btn sec" onclick="hasil=null;render()">Hitung ulang</button>'
+  + '<p class="err" id="e2"></p></div>';
+}
+
+function hitung(){
+  var c=+document.getElementById('i_cicilan').value, b=+document.getElementById('i_bunga').value, t=+document.getElementById('i_tenor').value;
+  var e=document.getElementById('e1'); e.textContent='';
+  if(!(c>0)||!(b>0)||!(t>0)){ e.textContent='Mohon isi ketiga angka dengan benar.'; return; }
+  if(b<=PATOKAN){ e.textContent='Bunga Anda sudah setara atau di bawah patokan kami ('+PATOKAN+'%). Kemungkinan besar pemindahan belum menguntungkan.'; return; }
+  var m=Math.round(t*12), p=sisaPokok(c,b,m), baru=angsuran(p,PATOKAN,m);
+  hasil={cicilan:c,bunga:b,sisaTenor:t,sisaPokok:p,cicilanBaru:baru,hemat:c-baru};
+  render(); window.scrollTo(0,0);
+}
+
+function kirim(){
+  var g=function(i){return document.getElementById(i).value}, e=document.getElementById('e2'); e.textContent='';
+  var d={nama:g('i_nama').trim(),wa:g('i_wa').trim(),bank:g('i_bank'),tahunAkad:+g('i_akad'),
+         plafon:+g('i_plafon'),penghasilan:g('i_hasil'),riwayat:g('i_riwayat'),masalahLain:g('i_lain')};
+  if(!d.nama||!d.wa||!d.bank||!d.tahunAkad||!(d.plafon>0)||!d.penghasilan||!d.riwayat||!d.masalahLain){
+    e.textContent='Semua kolom perlu diisi supaya konsultan bisa menilai.'; return; }
+  ['cicilan','bunga','sisaTenor','sisaPokok','cicilanBaru','hemat'].forEach(function(k){d[k]=hasil[k]});
+  var n=nilai(d); d.jalur=n.jalur; d.alasan=n.alasan; d.umur=n.umur; d.selisih=n.selisih;
+  d.id=idSeq++; d.tahap=0; d.minat=false;
+  d.masuk=new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'short'});
+  klien.push(d); kasusSaya=d.id; hasil=null; go('status');
+}
+
+function scKlienStatus(){
+  if(!kasusSaya) return '<div class="empty"><span class="em">📍</span>Belum ada proses berjalan.<br>Mulai dari tab <b>Cek Cicilan</b> untuk mengirim data Anda ke konsultan.</div>';
+  var k=klien.filter(function(x){return x.id===kasusSaya})[0];
+  var tr=TAHAP.map(function(t,i){
+    var c=i<k.tahap?'done':i===k.tahap?'now':'';
+    return '<div class="trow '+c+'"><div class="bul">'+(i<k.tahap?'✓':'')+'</div><div class="tx">'+t+'</div></div>';
+  }).join('');
+  return ''
+  + '<div class="hero"><div class="lbl">Estimasi penghematan Anda</div>'
+  + '<div class="big">'+rp(k.hemat)+'</div><div class="side">per bulan bila pengajuan disetujui</div>'
+  + '<div class="disc">Angka final ditentukan bank setelah penilaian. Konsultan kami akan mengabari perkembangannya lewat WhatsApp.</div></div>'
+  + '<div class="card"><h3>Lanjut ngobrol dengan konsultan</h3>'
+  + '<p class="sub">Tombol ini membuka WhatsApp dengan ringkasan data Anda yang sudah tertulis. Anda tinggal mengirimnya, tidak perlu mengulang cerita dari awal.</p>'
+  + '<button class="btn" onclick="kirimWA('+k.id+')">Kirim ringkasan via WhatsApp</button></div>'
+  + '<div class="card"><h3>Tahap pengurusan</h3><p class="sub">Posisi Anda saat ini: <b>'+TAHAP[k.tahap]+'</b></p><div class="track">'+tr+'</div></div>'
+  + '<div class="card"><h3>Ringkasan data Anda</h3><div class="kv">'
+  + '<div>Bank saat ini</div><div>'+esc(k.bank)+'</div>'
+  + '<div>Cicilan sekarang</div><div>'+rp(k.cicilan)+'</div>'
+  + '<div>Bunga berjalan</div><div>'+k.bunga+'%</div>'
+  + '<div>Sisa tenor</div><div>'+k.sisaTenor+' tahun</div>'
+  + '<div>KPR berjalan</div><div>'+k.umur+' tahun</div>'
+  + '</div></div>';
+}
+
+function kirimWA(id){
+  var k=klien.filter(function(x){return x.id===id})[0]; if(!k) return;
+  var t='Halo MR KPR, saya ingin dibantu menurunkan cicilan KPR saya.\n\n'
+   + 'Nama: '+k.nama+'\n'
+   + 'Bank KPR: '+k.bank+'\n'
+   + 'Tahun akad: '+k.tahunAkad+' (berjalan '+k.umur+' tahun)\n'
+   + 'Plafon awal: '+rp(k.plafon)+'\n'
+   + 'Cicilan sekarang: '+rp(k.cicilan)+'\n'
+   + 'Bunga berjalan: '+k.bunga+'%\n'
+   + 'Sisa tenor: '+k.sisaTenor+' tahun\n'
+   + 'Status penghasilan: '+k.penghasilan+'\n'
+   + 'Riwayat pembayaran: '+k.riwayat+'\n'
+   + 'Masalah finansial lain di perbankan: '+(k.masalahLain==='ya'?'Ada':'Tidak ada')+'\n\n'
+   + 'Estimasi dari aplikasi: cicilan bisa turun sekitar '+rp(k.hemat)+' per bulan.\n'
+   + '(Angka ini estimasi, saya paham perlu diverifikasi.)';
+  window.open('https://wa.me/'+WA_MRKPR+'?text='+encodeURIComponent(t),'_blank');
+}
+
+function scBantuKlien(){
+  return ''
+  + '<div class="card"><h3>Kenapa cicilan saya naik?</h3><p class="q">Masa bunga tetap (fixed) pada KPR punya batas waktu. Setelah habis, bunga berubah mengikuti kebijakan bank (floating), dan cicilan ikut naik. Ini normal secara aturan, tapi bukan berarti tidak bisa diupayakan turun.</p></div>'
+  + '<div class="card"><h3>Apa yang MR KPR kerjakan?</h3><p class="q">Konsultan kami menilai kondisi KPR Anda, menentukan jalur yang paling masuk akal, lalu mengurus berkas dan berhubungan dengan bank sampai akad. Konsultan kami mantan pegawai bank yang menangani KPR, jadi paham cara kerjanya dari dalam.</p></div>'
+  + '<div class="card"><h3>Berapa biayanya?</h3><p class="q">Anda tidak mengeluarkan biaya apa pun kepada kami. Biaya yang mungkin muncul adalah biaya resmi di bank seperti penalti pelunasan, appraisal, notaris, dan asuransi — dan itu akan kami jelaskan di awal sebelum Anda memutuskan.</p></div>'
+  + '<div class="card"><h3>Kalau kasus saya ditandai "pendekatan lain"?</h3><p class="q">Artinya pemindahan ke bank lain belum cocok untuk kondisi Anda sekarang. Bukan berarti selesai. Konsultan akan menawarkan jalur lain, misalnya renegosiasi ke bank tempat KPR Anda berjalan.</p></div>';
+}
+
+/* ================= LAYAR KONSULTAN ================= */
+function scBeranda(){
+  var hi=klien.filter(function(k){return k.jalur==='hi'}).length;
+  var mid=klien.filter(function(k){return k.jalur==='mid'}).length;
+  var alt=klien.filter(function(k){return k.jalur==='alt'}).length;
+  var baru=klien.filter(function(k){return k.tahap===0}).length;
+  var totalHemat=klien.filter(function(k){return k.jalur!=='alt'}).reduce(function(s,k){return s+k.hemat},0);
+  var perlu=klien.filter(function(k){return k.tahap===0&&k.jalur!=='alt'});
+  var lst=perlu.length?perlu.map(kartu).join(''):'<div class="empty" style="padding:26px"><span class="em">✅</span>Tidak ada yang menunggu ditinjau.</div>';
+  return ''
+  + '<div class="stats">'
+  + '<div class="stat dark"><b>'+baru+'</b><span>klien menunggu ditinjau, dari '+klien.length+' total klien masuk</span></div>'
+  + '<div class="stat"><b style="color:#0d7a5f">'+hi+'</b><span>Prioritas tinggi</span></div>'
+  + '<div class="stat"><b style="color:#96650f">'+mid+'</b><span>Antre</span></div>'
+  + '<div class="stat"><b style="color:#7038a0">'+alt+'</b><span>Pendekatan lain</span></div>'
+  + '<div class="stat"><b>'+rpk(totalHemat)+'</b><span>Total estimasi hemat/bln</span></div>'
+  + '</div>'
+  + '<div class="card" style="padding-bottom:6px"><h3>Perlu ditinjau lebih dulu</h3><p class="sub">Klien baru yang jalurnya bisa jalan. Penilaian akhir tetap di tangan Anda.</p></div>'
+  + lst;
+}
+function kartu(k){
+  return '<div class="item '+k.jalur+'" onclick="sheet('+k.id+')">'
+  + '<div class="r1"><div><div class="nm">'+esc(k.nama)+'</div>'
+  + '<div class="meta">'+esc(k.bank)+' · plafon '+rpk(k.plafon)+' · bunga '+k.bunga+'% · masuk '+k.masuk+'</div></div>'
+  + labelJalur(k.jalur)+'</div>'
+  + '<div class="r2"><span class="stage">'+TAHAP[k.tahap]+'</span><b>'+rp(k.hemat)+'/bln</b></div></div>';
+}
+function scDaftar(){
+  var f=['all','hi','mid','alt'], nm={all:'Semua',hi:'Prioritas tinggi',mid:'Antre',alt:'Pendekatan lain'};
+  var chips=f.map(function(x){return '<button class="'+(filterJalur===x?'on':'')+'" onclick="setF(\''+x+'\')">'+nm[x]+'</button>'}).join('');
+  var list=filterJalur==='all'?klien:klien.filter(function(k){return k.jalur===filterJalur});
+  var body=list.length?list.map(kartu).join(''):'<div class="empty"><span class="em">👥</span>Belum ada klien di kelompok ini.</div>';
+  var eks=list.length?'<div class="card" style="margin-top:3px"><h3>Kerja di spreadsheet</h3>'
+    + '<p class="sub">Unduh '+list.length+' data yang sedang tampil sebagai CSV, lalu buka di Excel atau Google Sheets untuk hitungan lanjutan atau arsip.</p>'
+    + '<button class="btn sec" style="margin-top:0" onclick="unduhCSV()">Unduh CSV ('+list.length+' klien)</button></div>':'';
+  return '<div class="chips">'+chips+'</div>'+body+eks;
+}
+function setF(x){ filterJalur=x; render(); }
+
+function unduhCSV(){
+  var list=filterJalur==='all'?klien:klien.filter(function(k){return k.jalur===filterJalur});
+  var JN={hi:'Prioritas tinggi',mid:'Antre',alt:'Pendekatan lain'};
+  var kol=['Nama','WhatsApp','Bank','Tahun akad','Umur KPR (th)','Plafon awal','Cicilan sekarang',
+           'Bunga (%)','Sisa tenor (th)','Estimasi sisa pokok','Estimasi cicilan baru','Estimasi hemat/bln',
+           'Selisih bunga (%)','Penghasilan','Riwayat bayar','Masalah bank lain','Jalur','Tahap','Alasan penilaian'];
+  var q=function(v){ return '"'+String(v).replace(/"/g,'""')+'"'; };
+  var baris=list.map(function(k){
+    return [k.nama,k.wa,k.bank,k.tahunAkad,k.umur,Math.round(k.plafon),Math.round(k.cicilan),
+            k.bunga,k.sisaTenor,Math.round(k.sisaPokok),Math.round(k.cicilanBaru),Math.round(k.hemat),
+            k.selisih.toFixed(1),k.penghasilan,k.riwayat,(k.masalahLain==='ya'?'Ada':'Tidak ada'),
+            JN[k.jalur],TAHAP[k.tahap],k.alasan.join(' | ')].map(q).join(';');
+  });
+  /* pemisah titik koma + BOM supaya Excel berbahasa Indonesia membacanya dengan benar */
+  var csv='﻿'+kol.map(q).join(';')+'\n'+baris.join('\n');
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download='mrkpr-klien-'+filterJalur+'.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+
+function scTren(){
+  var n=klien.length;
+  if(!n) return '<div class="empty"><span class="em">📈</span>Belum ada data untuk dibaca polanya.</div>';
+  var hi=klien.filter(function(k){return k.jalur==='hi'}).length;
+  var mid=klien.filter(function(k){return k.jalur==='mid'}).length;
+  var alt=klien.filter(function(k){return k.jalur==='alt'}).length;
+  var jalan=klien.filter(function(k){return k.jalur!=='alt'});
+  var rerata=jalan.length?jalan.reduce(function(s,k){return s+k.hemat},0)/jalan.length:0;
+  var mandek=klien.filter(function(k){return k.tahap>0&&k.tahap<5});
+  var selesai=klien.filter(function(k){return k.tahap===5}).length;
+  var lolosPersen=Math.round((jalan.length/n)*100);
+
+  /* sebaran jalur */
+  var bar=function(lbl,v,warna){
+    var p=n?Math.round(v/n*100):0;
+    return '<div style="margin-bottom:13px">'
+    + '<div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px">'
+    + '<span>'+lbl+'</span><span style="color:var(--ink2)"><b style="color:var(--ink)">'+v+'</b> · '+p+'%</span></div>'
+    + '<div style="height:8px;background:var(--bg);border-radius:5px;overflow:hidden">'
+    + '<div style="height:100%;width:'+p+'%;background:'+warna+';border-radius:5px"></div></div></div>';
+  };
+
+  /* sebaran tahap */
+  var tahapRows=TAHAP.map(function(t,i){
+    var c=klien.filter(function(k){return k.tahap===i}).length;
+    var p=n?Math.round(c/n*100):0;
+    return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px">'
+    + '<div style="flex:1">'+t+'</div>'
+    + '<div style="width:96px;height:7px;background:var(--bg);border-radius:5px;overflow:hidden">'
+    + '<div style="height:100%;width:'+p+'%;background:var(--brand2)"></div></div>'
+    + '<div style="width:22px;text-align:right;color:var(--ink2)">'+c+'</div></div>';
+  }).join('');
+
+  /* bank paling sering */
+  var bankMap={}; klien.forEach(function(k){bankMap[k.bank]=(bankMap[k.bank]||0)+1});
+  var banks=Object.keys(bankMap).sort(function(a,b){return bankMap[b]-bankMap[a]}).slice(0,5);
+  var maxB=bankMap[banks[0]]||1;
+  var bankRows=banks.map(function(b){
+    var p=Math.round(bankMap[b]/maxB*100);
+    return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px">'
+    + '<div style="flex:1">'+esc(b)+'</div>'
+    + '<div style="width:96px;height:7px;background:var(--bg);border-radius:5px;overflow:hidden">'
+    + '<div style="height:100%;width:'+p+'%;background:#5a8fc4"></div></div>'
+    + '<div style="width:22px;text-align:right;color:var(--ink2)">'+bankMap[b]+'</div></div>';
+  }).join('');
+
+  /* alasan penolakan tersering */
+  var alasanMap={};
+  klien.filter(function(k){return k.jalur!=='hi'}).forEach(function(k){
+    k.alasan.forEach(function(a){
+      var key=a.indexOf('masalah finansial')>-1?'Ada masalah finansial lain di perbankan'
+             :a.indexOf('menunggak')>-1?'Sedang menunggak KPR'
+             :a.indexOf('di bawah syarat minimal 5 tahun')>-1?'KPR belum berjalan 5 tahun'
+             :a.indexOf('Rp 1 miliar')>-1?'Plafon awal di bawah Rp 1 miliar'
+             :a.indexOf('Selisih bunga hanya')>-1?'Selisih bunga di bawah 3%'
+             :null;
+      if(key) alasanMap[key]=(alasanMap[key]||0)+1;
+    });
+  });
+  var ak=Object.keys(alasanMap).sort(function(a,b){return alasanMap[b]-alasanMap[a]});
+  var alasanRows=ak.length?ak.map(function(a){
+    return '<div style="display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:8px 0;border-bottom:1px solid var(--line)">'
+    + '<span style="color:var(--ink2)">'+a+'</span><b>'+alasanMap[a]+'</b></div>';
+  }).join(''):'<p class="q" style="margin:0">Belum ada kasus yang tersaring keluar.</p>';
+
+  return ''
+  + '<div class="stats">'
+  + '<div class="stat dark"><b>'+lolosPersen+'%</b><span>klien yang jalurnya bisa jalan, dari '+n+' klien masuk</span></div>'
+  + '<div class="stat"><b>'+rpk(rerata)+'</b><span>Rata-rata hemat per klien</span></div>'
+  + '<div class="stat"><b>'+selesai+'</b><span>Selesai akad</span></div>'
+  + '</div>'
+
+  + '<div class="card"><h3>Sebaran jalur</h3><p class="sub">Ke mana klien-klien Anda bermuara setelah disaring.</p>'
+  + bar('Prioritas tinggi',hi,'#0d7a5f') + bar('Antre',mid,'#c08a1f') + bar('Pendekatan lain',alt,'#7038a0')
+  + '</div>'
+
+  + '<div class="card"><h3>Posisi kasus berjalan</h3><p class="sub">Menumpuk di satu tahap berarti ada hambatan di situ.</p>'+tahapRows+'</div>'
+
+  + '<div class="card"><h3>Kenapa kasus tidak masuk prioritas</h3><p class="sub">Alasan yang paling sering muncul. Kalau satu alasan mendominasi, mungkin penyaringan di depan perlu diperjelas ke calon klien.</p>'
+  + alasanRows+'</div>'
+
+  + '<div class="card"><h3>Bank asal klien</h3><p class="sub">Bank tempat KPR klien berjalan sekarang.</p>'+bankRows+'</div>'
+
+  + '<div class="card"><h3>Cara membaca halaman ini</h3><p class="q">Angka di sini dihitung dari isian klien yang belum diverifikasi, jadi ia menunjukkan pola, bukan kebenaran. Berguna untuk menjawab pertanyaan seperti: apakah promosi kita menarik orang yang tepat, dan di tahap mana kasus paling sering tersendat.</p>'
+  + (n<10?'<p class="q" style="margin-top:10px;color:var(--mid)"><b>Baru '+n+' klien.</b> Pola belum bisa dipercaya sampai datanya jauh lebih banyak.</p>':'')
+  + '</div>';
+}
+function scAturan(){
+  return ''
+  + '<div class="card"><h3>Aturan penyaringan</h3><p class="sub">Disusun dari pengalaman konsultan MR KPR, bukan dari sumber luar.</p>'
+  + '<ul class="rules">'
+  + '<li>KPR harus sudah berjalan minimal <b>5 tahun</b> sejak akad</li>'
+  + '<li>Plafon awal saat akad minimal <b>Rp 1 miliar</b></li>'
+  + '<li>Selisih bunga berjalan dengan patokan penawaran '+PATOKAN+'% minimal <b>3%</b></li>'
+  + '<li>Ada masalah finansial lain di perbankan &rarr; <b>pendekatan lain</b></li>'
+  + '<li>Sedang menunggak KPR &rarr; <b>pendekatan lain</b></li>'
+  + '<li>Tidak ada batas minimal sisa tenor</li>'
+  + '</ul></div>'
+  + '<div class="card"><h3>Tiga jalur, bukan lolos atau gagal</h3>'
+  + '<p class="q"><b>Prioritas tinggi</b> — memenuhi seluruh syarat, langsung dikerjakan.<br><br>'
+  + '<b>Antre</b> — bisa diproses, tapi nilainya lebih kecil atau selisih bunganya tipis.<br><br>'
+  + '<b>Pendekatan lain</b> — pemindahan bank belum cocok. Arahkan ke renegosiasi di bank existing atau tunggu syarat terpenuhi.</p></div>'
+  + '<div class="card"><h3>Batas sistem ini</h3><p class="q">Sistem tidak memutuskan, ia hanya menyiapkan bahan. Seluruh angka berlabel estimasi dan dihitung dari isian klien yang belum diverifikasi. Persetujuan akhir tetap milik bank.</p></div>';
+}
+
+/* ================= LAYAR MITRA BANK ================= */
+function scProspek(){
+  var siap=klien.filter(function(k){return k.jalur!=='alt'});
+  if(!siap.length) return '<div class="notice">Data pribadi klien tidak ditampilkan di sisi mitra bank. Yang terlihat hanya profil kredit ringkas.</div>'
+    + '<div class="empty"><span class="em">📊</span>Belum ada calon debitur tersaring.</div>';
+  var totalPlafon=siap.reduce(function(s,k){return s+k.plafon},0);
+  var body=siap.map(function(k){
+    return '<div class="item '+k.jalur+'" onclick="sheetBank('+k.id+')">'
+    + '<div class="r1"><div><div class="nm">'+inisial(k.nama)+' &middot; '+esc(k.penghasilan)+'</div>'
+    + '<div class="meta">Plafon awal '+rpk(k.plafon)+' · KPR '+k.umur+' th · sisa tenor '+k.sisaTenor+' th · '+esc(k.riwayat).toLowerCase()+'</div></div>'
+    + labelJalur(k.jalur)+'</div>'
+    + '<div class="r2"><span class="stage">Estimasi sisa pokok '+rpk(k.sisaPokok)+'</span><b>'+(k.minat?'✓ Diminati':'Bunga kini '+k.bunga+'%')+'</b></div></div>';
+  }).join('');
+  return '<div class="notice">Nama dan kontak klien tidak ditampilkan. Yang terlihat hanya profil kredit ringkas yang sudah lolos penyaringan MR KPR.</div>'
+  + '<div class="stats"><div class="stat"><b>'+siap.length+'</b><span>Calon debitur</span></div>'
+  + '<div class="stat"><b>'+rpk(totalPlafon)+'</b><span>Total plafon awal</span></div></div>'
+  + body;
+}
+function sheetBank(id){
+  var k=klien.filter(function(x){return x.id===id})[0]; if(!k) return;
+  open_(''
+  + '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px">'
+  + '<div><h3 style="margin:0">'+inisial(k.nama)+'</h3><p class="sub" style="margin:2px 0 0">'+esc(k.penghasilan)+' · '+esc(k.bank)+'</p></div>'+labelJalur(k.jalur)+'</div>'
+  + '<div class="kv">'
+  + '<div>Plafon awal</div><div>'+rp(k.plafon)+'</div>'
+  + '<div>Estimasi sisa pokok</div><div>'+rp(k.sisaPokok)+'</div>'
+  + '<div>KPR berjalan</div><div>'+k.umur+' tahun</div>'
+  + '<div>Sisa tenor</div><div>'+k.sisaTenor+' tahun</div>'
+  + '<div>Bunga berjalan</div><div>'+k.bunga+'%</div>'
+  + '<div>Cicilan berjalan</div><div>'+rp(k.cicilan)+'</div>'
+  + '<div>Riwayat bayar</div><div>'+esc(k.riwayat)+'</div>'
+  + '<div>Masalah bank lain</div><div>'+(k.masalahLain==='ya'?'Ada':'Tidak ada')+'</div>'
+  + '</div>'
+  + '<button class="btn" onclick="minat('+k.id+')">'+(k.minat?'✓ Sudah ditandai diminati':'Tandai diminati')+'</button>'
+  + '<button class="btn sec" onclick="tutup()">Tutup</button>'
+  + '<p class="sub" style="margin-top:12px;font-size:11.5px">Seluruh angka adalah estimasi dari isian calon debitur dan belum diverifikasi. Identitas dibuka hanya setelah mitra bank menandai minat dan klien menyetujuinya.</p>'
+  + '</div>');
+}
+function minat(id){ klien.forEach(function(k){if(k.id===id)k.minat=true}); sheetBank(id); render(); }
+function scTentangBank(){
+  return ''
+  + '<div class="card"><h3>Apa yang Anda lihat di sini</h3><p class="q">Daftar calon debitur KPR yang cicilannya sedang terbebani bunga floating tinggi, dan sudah melewati penyaringan awal MR KPR: KPR berjalan minimal 5 tahun, plafon awal minimal Rp 1 miliar, dan selisih bunga minimal 3%.</p></div>'
+  + '<div class="card"><h3>Kenapa namanya disembunyikan</h3><p class="q">Data pribadi calon debitur adalah milik mereka. Identitas dan kontak baru dibuka setelah Anda menandai minat dan calon debitur menyetujui perkenalannya. Sebelum itu, yang Anda lihat hanya profil kreditnya.</p></div>'
+  + '<div class="card"><h3>Catatan penting</h3><p class="q">Seluruh angka di sini adalah estimasi yang dihitung dari isian calon debitur sendiri dan belum diverifikasi terhadap dokumen. Penilaian dan persetujuan tetap sepenuhnya mengikuti prosedur bank Anda.</p></div>';
+}
+
+/* ================= SHEET KONSULTAN ================= */
+function sheet(id){
+  var k=klien.filter(function(x){return x.id===id})[0]; if(!k) return;
+  var al=k.alasan.map(function(a){return '<li>'+esc(a)+'</li>'}).join('');
+  var tr=TAHAP.map(function(t,i){
+    var c=i<k.tahap?'done':i===k.tahap?'now':'';
+    return '<div class="trow '+c+'" onclick="setTahap('+k.id+','+i+')"><div class="bul">'+(i<k.tahap?'✓':'')+'</div><div class="tx">'+t+'</div></div>';
+  }).join('');
+  open_(''
+  + '<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:13px">'
+  + '<div><h3 style="margin:0">'+esc(k.nama)+'</h3><p class="sub" style="margin:2px 0 0">'+esc(k.wa)+' · '+esc(k.bank)+'</p></div>'+labelJalur(k.jalur)+'</div>'
+  + '<div class="reason"><b>Alasan penilaian sistem</b><ul>'+al+'</ul></div>'
+  + '<div class="kv">'
+  + '<div>Cicilan sekarang</div><div>'+rp(k.cicilan)+' · '+k.bunga+'%</div>'
+  + '<div>Perkiraan baru</div><div>'+rp(k.cicilanBaru)+' · '+PATOKAN+'%</div>'
+  + '<div>Estimasi hemat</div><div style="color:#0d7a5f">'+rp(k.hemat)+'/bln</div>'
+  + '<div>Estimasi sisa pokok</div><div>'+rp(k.sisaPokok)+'</div>'
+  + '<div>Plafon awal</div><div>'+rp(k.plafon)+'</div>'
+  + '<div>Tahun akad</div><div>'+k.tahunAkad+' ('+k.umur+' th)</div>'
+  + '<div>Sisa tenor</div><div>'+k.sisaTenor+' tahun</div>'
+  + '<div>Selisih bunga</div><div>'+k.selisih.toFixed(1)+'%</div>'
+  + '<div>Penghasilan</div><div>'+esc(k.penghasilan)+'</div>'
+  + '<div>Riwayat bayar</div><div>'+esc(k.riwayat)+'</div>'
+  + '<div>Masalah bank lain</div><div>'+(k.masalahLain==='ya'?'Ada':'Tidak ada')+'</div>'
+  + '</div></div>'
+  + '<div class="card"><h3>Tahap penanganan</h3><p class="sub">Ketuk tahap untuk memperbaruinya.</p><div class="track">'+tr+'</div>'
+  + '<button class="btn sec" onclick="tutup()">Tutup</button></div>');
+}
+function setTahap(id,i){ klien.forEach(function(k){if(k.id===id)k.tahap=i}); sheet(id); render(); }
+function open_(html){
+  document.getElementById('sheetWrap').innerHTML=
+    '<div class="sheet" onclick="if(event.target===this)tutup()"><div class="inner"><div class="grab"></div>'+html+'</div></div>';
+}
+function tutup(){ document.getElementById('sheetWrap').innerHTML=''; }
+
+/* ================= DATA CONTOH ================= */
+(function(){
+  [{nama:'Budi Santoso (contoh)',wa:'0812xxxx1234',bank:'BCA',tahunAkad:2017,plafon:1800000000,penghasilan:'Karyawan tetap',riwayat:'Selalu lancar',masalahLain:'tidak',cicilan:16500000,bunga:10.5,sisaTenor:11,tahap:0},
+   {nama:'Sari Melati (contoh)',wa:'0811xxxx4455',bank:'CIMB Niaga',tahunAkad:2016,plafon:2400000000,penghasilan:'Profesional',riwayat:'Selalu lancar',masalahLain:'tidak',cicilan:21000000,bunga:11,sisaTenor:9,tahap:2},
+   {nama:'Rina Wijaya (contoh)',wa:'0813xxxx5678',bank:'Mandiri',tahunAkad:2019,plafon:750000000,penghasilan:'Wiraswasta',riwayat:'Pernah telat, kini lancar',masalahLain:'tidak',cicilan:7200000,bunga:9,sisaTenor:9,tahap:0},
+   {nama:'Andi Prasetyo (contoh)',wa:'0857xxxx9012',bank:'BTN',tahunAkad:2021,plafon:1200000000,penghasilan:'Karyawan tetap',riwayat:'Sedang menunggak',masalahLain:'ya',cicilan:11000000,bunga:11,sisaTenor:14,tahap:0}
+  ].forEach(function(d){
+    var m=Math.round(d.sisaTenor*12);
+    d.sisaPokok=sisaPokok(d.cicilan,d.bunga,m);
+    d.cicilanBaru=angsuran(d.sisaPokok,PATOKAN,m);
+    d.hemat=d.cicilan-d.cicilanBaru;
+    var n=nilai(d); d.jalur=n.jalur; d.alasan=n.alasan; d.umur=n.umur; d.selisih=n.selisih;
+    d.id=idSeq++; d.minat=false;
+    d.masuk=new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'short'});
+    klien.push(d);
+  });
+})();
+</script>
+</body>
+</html>
