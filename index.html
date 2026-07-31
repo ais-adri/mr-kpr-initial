@@ -169,7 +169,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <div class="tag">Konsultan penurunan cicilan KPR</div>
     <h1>Cicilan KPR Anda naik.<br><em>Itu masih bisa diturunkan.</em></h1>
     <p>Setelah masa bunga tetap habis, cicilan ikut melonjak dan banyak orang menganggapnya tidak bisa diapa-apakan. Kami mengurus perpindahannya dari awal sampai akad. Anda tidak mengeluarkan biaya apa pun kepada kami.</p>
-    <button class="lbtn" onclick="keLogin()">Masuk ke aplikasi</button>
+    <button class="lbtn" onclick="keLogin()">Cek potensi penurunan cicilan</button>
     <div class="lnum">
       <div><b>5%</b><span>patokan penawaran kami</span></div>
       <div><b>Rp 0</b><span>biaya jasa ke klien</span></div>
@@ -194,16 +194,8 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <div class="lstep"><div class="n">✓</div><div><b>Menemani sampai cicilan benar-benar turun</b><p>Atau tenor Anda jadi lebih singkat, tergantung mana yang lebih Anda butuhkan.</p></div></div>
   </div>
 
-  <div class="lsec">
-    <h2>Kalau ternyata belum cocok</h2>
-    <p class="lead">Kami akan bilang apa adanya.</p>
-    <div class="quote">Tidak semua KPR layak dipindahkan. Kalau KPR Anda baru berjalan sebentar, atau selisih bunganya tipis, biaya pindahnya bisa menelan seluruh penghematan. Dalam kasus seperti itu kami akan mengatakannya terus terang dan menawarkan jalur lain, misalnya renegosiasi ke bank tempat KPR Anda berjalan sekarang.
-      <b>Ini yang membedakan konsultan dari penjual.</b></div>
-  </div>
-
   <div class="lfoot">
     <button class="lbtn" style="background:var(--brand);color:#fff" onclick="keLogin()">Cek potensi penurunan cicilan</button>
-    <p>Prototype uji coba MBCL Cohort 2 · Juli 2026<br>Belum ada sistem masuk. Jangan memasukkan data pribadi asli.</p>
   </div>
 </div>
 
@@ -211,7 +203,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 <div id="picker">
   <div class="mark">MR</div>
   <h1>Selamat datang di MR KPR</h1>
-  <p class="lead">Cicilan KPR naik setelah masa fixed habis? Kami mengurus perpindahannya dari awal sampai akad. Pilih dulu, Anda masuk sebagai siapa hari ini?</p>
+  <p class="lead">Pilih dulu, Anda masuk sebagai siapa hari ini?</p>
 
   <button class="rolebtn" onclick="masuk('klien')">
     <div class="ic">🏠</div>
@@ -226,7 +218,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <div><b>Saya Mitra Bank</b><span>Lihat calon debitur yang sudah tersaring, tanpa data pribadi</span></div>
   </button>
 
-  <div class="foot"><a href="#" onclick="keLanding();return false" style="color:rgba(255,255,255,.75)">&larr; Kembali ke halaman utama</a><br><br>Prototype uji coba MBCL Cohort 2.<br>Belum ada sistem masuk. Jangan memasukkan data pribadi asli.</div>
+  <div class="foot"><a href="#" onclick="keLanding();return false" style="color:rgba(255,255,255,.75)">&larr; Kembali ke halaman utama</a></div>
 </div>
 
 <!-- ================= APP ================= -->
@@ -443,7 +435,7 @@ function kirimWA(id){
    + 'Status penghasilan: '+k.penghasilan+'\n'
    + 'Riwayat pembayaran: '+k.riwayat+'\n'
    + 'Masalah finansial lain di perbankan: '+(k.masalahLain==='ya'?'Ada':'Tidak ada')+'\n\n'
-   + 'Estimasi dari aplikasi: cicilan bisa turun sekitar '+rp(k.hemat)+' per bulan.\n'
+   + 'Estimasi dari situs MR KPR: cicilan bisa turun sekitar '+rp(k.hemat)+' per bulan.\n'
    + '(Angka ini estimasi, saya paham perlu diverifikasi.)';
   window.open('https://wa.me/'+WA_MRKPR+'?text='+encodeURIComponent(t),'_blank');
 }
