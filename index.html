@@ -100,6 +100,22 @@
   }
   .grup-isian{ margin-bottom: 16px; }
 
+  .wadah-rp{ position:relative; }
+  .wadah-rp .awalan-rp{
+    position:absolute; left:16px; top:50%; transform:translateY(-50%);
+    color: var(--ink2); font-size:17px; pointer-events:none;
+  }
+  .wadah-rp .isian{ padding-left:40px; }
+
+  .wadah-persen{ position:relative; }
+  .wadah-persen .akhiran-persen{
+    position:absolute; right:16px; top:50%; transform:translateY(-50%);
+    color: var(--ink2); font-size:17px; pointer-events:none;
+  }
+  .wadah-persen .isian{ padding-right:36px; }
+
+  .petunjuk-tenor{ font-size:12.5px; color:var(--ink2); margin-top:6px; }
+
   /* ---------- tombol ---------- */
   .tombol-utama{
     display:block;
@@ -158,8 +174,40 @@
   .judul-utama .oranye{ color: var(--jingga); display:block; }
   .subjudul-utama{
     color: var(--ink2);
-    font-size: 15px;
-    margin: 14px 0 20px;
+    font-size: 14.5px;
+    margin: 8px 0 12px;
+    line-height:1.45;
+  }
+
+  .nama-merek{
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--hutan);
+    letter-spacing:.02em;
+    margin-bottom: 4px;
+  }
+
+  .baris-kepercayaan{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .item-kepercayaan{
+    text-align:center;
+    background: var(--hutansoft);
+    border-radius: 12px;
+    padding: 6px 4px;
+  }
+  .item-kepercayaan .ikon{ font-size:13px; color:var(--hutan); display:block; margin-bottom:1px; }
+  .item-kepercayaan .label{ font-size:11.5px; font-weight:700; color:var(--hutan); display:block; }
+  .item-kepercayaan .ket{ font-size:10px; color:var(--ink2); display:block; margin-top:1px; }
+
+  .judul-kecil-isian{
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
   }
 
   .pesan-galat{
@@ -219,6 +267,13 @@
   .kotak-kecil .l{ font-size: 12px; opacity:.8; }
   .kotak-kecil .v{ font-size: 16px; font-weight:700; margin-top:2px; }
 
+  .kalimat-penutup-hasil{
+    font-size: 14px;
+    opacity:.95;
+    line-height:1.5;
+    margin-top: 14px;
+  }
+
   .kotak-peringatan{
     background: var(--jinggasoft);
     border-radius: 12px;
@@ -230,8 +285,30 @@
   }
   .kotak-peringatan b{ color: var(--ink); }
 
+  /* ---------- langkah selanjutnya ---------- */
+  .kartu-langkah{ margin-top: 16px; }
+  .kartu-langkah h3{ font-size: 16px; margin: 0 0 16px; color: var(--hutan); }
+  .daftar-langkah{
+    display:flex; flex-direction:column; gap: 14px;
+    margin-bottom: 18px;
+  }
+  .item-langkah{ display:flex; gap:12px; }
+  .item-langkah .no{
+    flex-shrink:0; width:26px; height:26px; border-radius:50%;
+    background: var(--hutansoft); color: var(--hutan);
+    font-weight:800; font-size:13px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .item-langkah b{ display:block; margin-bottom:2px; font-size:14.5px; }
+  .item-langkah span{ color: var(--ink2); font-size:13.5px; }
+
   /* ---------- penjelasan ---------- */
-  .seksi-penjelasan{ margin-top: 40px; }
+  .seksi-penjelasan{ margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .pemisah-ragu{
+    font-size: 12.5px; font-weight:700; color: var(--ink3);
+    text-transform: uppercase; letter-spacing:.04em;
+    margin-bottom: 18px;
+  }
   .judul-seksi{
     font-size: 22px;
     font-weight: 800;
@@ -701,6 +778,8 @@
     .baris-ringkasan{ grid-template-columns: repeat(2,1fr); }
     .judul-utama{ font-size:27px; }
     .angka-hasil{ font-size:34px; }
+    .wadah-klien{ padding-top: 14px; }
+    .grup-isian{ margin-bottom: 12px; }
   }
 </style>
 </head>
@@ -709,22 +788,38 @@
 <!-- ======================= HALAMAN DEPAN ======================= -->
 <div id="halamanDepan" class="wadah-klien">
 
+  <div class="nama-merek">MR KPR</div>
   <span class="penanda-atas">Konsultan penurunan cicilan KPR</span>
   <h1 class="judul-utama">Cicilan KPR Anda naik?<span class="oranye">Lihat berapa yang bisa turun.</span></h1>
-  <p class="subjudul-utama">Isi tiga angka. Tanpa daftar, tanpa nomor telepon.</p>
+  <p class="subjudul-utama">Setelah bunga tetap habis, cicilan KPR naik dan banyak yang mengira itu tak bisa diubah. Isi tiga angka, langsung tahu potensi turunnya.</p>
+
+  <div class="baris-kepercayaan">
+    <div class="item-kepercayaan"><span class="ikon">✓</span><span class="label">Gratis</span><span class="ket">tanpa biaya jasa</span></div>
+    <div class="item-kepercayaan"><span class="ikon">✓</span><span class="label">Tanpa daftar</span><span class="ket">tidak perlu akun</span></div>
+    <div class="item-kepercayaan"><span class="ikon">✓</span><span class="label">± 30 detik</span><span class="ket">cukup tiga angka</span></div>
+  </div>
+
+  <h2 class="judul-kecil-isian">Isi tiga angka ini</h2>
 
   <div id="blokKalkulator">
     <div class="grup-isian">
       <label class="label-isian" for="inCicilan">Cicilan per bulan sekarang (Rp)</label>
-      <input class="isian" type="text" inputmode="numeric" id="inCicilan" placeholder="Angka yang Anda bayar bulan ini">
+      <div class="wadah-rp">
+        <span class="awalan-rp">Rp</span>
+        <input class="isian" type="text" inputmode="numeric" id="inCicilan" placeholder="Angka yang Anda bayar bulan ini">
+      </div>
     </div>
     <div class="grup-isian">
       <label class="label-isian" for="inBunga">Bunga berjalan sekarang (%)</label>
-      <input class="isian" type="text" inputmode="decimal" id="inBunga" placeholder="Bunga floating yang berlaku, ada di surat bank">
+      <div class="wadah-persen">
+        <input class="isian" type="text" inputmode="decimal" id="inBunga" placeholder="Bunga floating yang berlaku, ada di surat bank">
+        <span class="akhiran-persen">%</span>
+      </div>
     </div>
     <div class="grup-isian">
-      <label class="label-isian" for="inTenor">Sisa tenor (tahun)</label>
-      <input class="isian" type="text" inputmode="decimal" id="inTenor" placeholder="Berapa tahun lagi KPR Anda berjalan">
+      <label class="label-isian" for="inTenor">Sisa tenor (bulan)</label>
+      <input class="isian" type="text" inputmode="numeric" id="inTenor" placeholder="Berapa bulan lagi KPR Anda berjalan. Contoh: 132 bulan untuk 11 tahun.">
+      <div class="petunjuk-tenor" id="petunjukTenor"></div>
     </div>
     <button class="tombol-utama" id="btnHitung">Hitung penghematan saya</button>
     <div id="pesanGalatKalkulator"></div>
@@ -737,6 +832,8 @@
       <div class="per-bulan">per bulan</div>
       <div class="baris-tahunan">Sekitar <b id="hematSetahun">Rp 0</b> setahun, atau <b id="hematTotal">Rp 0</b> sepanjang sisa tenor Anda</div>
 
+      <div class="kalimat-penutup-hasil">Angka ini bisa jadi kenyataan kalau KPR Anda dipindahkan ke bank dengan penawaran lebih rendah. Pengurusannya kami yang kerjakan.</div>
+
       <div class="kotak-kecil-grid">
         <div class="kotak-kecil"><div class="l">Cicilan sekarang</div><div class="v" id="kkCicilanSekarang">-</div></div>
         <div class="kotak-kecil"><div class="l">Perkiraan baru</div><div class="v" id="kkCicilanBaru">-</div></div>
@@ -745,17 +842,28 @@
       </div>
     </div>
 
-    <div class="kotak-peringatan">
-      <b>Ini estimasi, bukan janji.</b> Angka sebenarnya ditentukan bank setelah penilaian. Patokan 5% adalah kisaran yang biasa kami usahakan berdasarkan pengalaman menangani klien, bukan angka resmi yang berlaku untuk semua orang.
+    <!-- 7.2b Langkah selanjutnya -->
+    <div class="kartu kartu-langkah">
+      <h3>Langkah selanjutnya</h3>
+      <div class="daftar-langkah">
+        <div class="item-langkah"><span class="no">1</span><div><b>Isi data KPR Anda</b><span>Delapan pertanyaan singkat, dijawab sambil ngobrol. Sekitar dua menit.</span></div></div>
+        <div class="item-langkah"><span class="no">2</span><div><b>Konsultan kami menilai kasus Anda</b><span>Kami cek kelayakannya dan tentukan jalur yang paling masuk akal.</span></div></div>
+        <div class="item-langkah"><span class="no">3</span><div><b>Kami hubungi lewat WhatsApp</b><span>Kalau layak, kami urus dokumennya sampai akad. Anda tidak keluar biaya apa pun ke kami.</span></div></div>
+      </div>
+      <button class="tombol-utama" id="btnMauDibantu1">Mulai, isi data KPR saya</button>
     </div>
 
-    <button class="tombol-utama" style="margin-top:18px;" id="btnMauDibantu1">Mau kami bantu mengurusnya?</button>
     <div style="text-align:center; margin-top:6px;">
       <button class="tautan-kecil" id="btnHitungUlang">Hitung ulang dengan angka lain</button>
     </div>
 
+    <div class="kotak-peringatan">
+      <b>Ini estimasi, bukan janji.</b> Angka sebenarnya ditentukan bank setelah penilaian. Patokan 5% adalah kisaran yang biasa kami usahakan berdasarkan pengalaman menangani klien, bukan angka resmi yang berlaku untuk semua orang.
+    </div>
+
     <!-- 7.3 Penjelasan -->
     <div class="seksi-penjelasan">
+      <div class="pemisah-ragu">Masih ragu? Ini penjelasannya.</div>
       <h2 class="judul-seksi">Kenapa cicilan Anda naik</h2>
       <p class="subjudul-seksi">Bukan salah Anda, dan bukan sesuatu yang harus diterima begitu saja.</p>
       <div class="daftar-alasan">
@@ -1025,7 +1133,7 @@ var kasusIdCounter = 1;
 var peran = null;      // 'konsultan' | 'bank' | null
 var kasusMilikSaya = null; // referensi kasus milik pengunjung saat ini
 
-var hasilKalkulator = null; // {cicilan,bunga,tenor,pokok,cicilanBaru,hemat}
+var hasilKalkulator = null; // {cicilan,bunga,sisaBulan,pokok,cicilanBaru,hemat}
 
 /* =========================================================
    2. UTILITAS
@@ -1069,6 +1177,20 @@ function angkaSaja(str){
 function desimalSaja(str){
   var v = String(str||'').replace(',', '.').replace(/[^\d.]/g,'');
   return v;
+}
+
+function pasangFormatRupiah(el){
+  el.setAttribute('type','text');        // wajib, karena input number menolak titik
+  el.setAttribute('inputmode','numeric'); // papan tik ponsel tetap menampilkan angka
+  el.addEventListener('input', function(){
+    var posisi = el.selectionStart;
+    var panjangLama = el.value.length;
+    var bersih = el.value.replace(/\D/g,'');
+    el.value = bersih ? Number(bersih).toLocaleString('id-ID') : '';
+    // jaga posisi kursor supaya tidak melompat ke ujung saat menyunting
+    var selisih = el.value.length - panjangLama;
+    el.setSelectionRange(posisi + selisih, posisi + selisih);
+  });
 }
 
 function inisial(nama){
@@ -1182,16 +1304,33 @@ function animasiAngka(elemen, target, durasi, formatFn){
 /* =========================================================
    6. HALAMAN DEPAN — KALKULATOR
    ========================================================= */
+pasangFormatRupiah($('inCicilan'));
+
+function formatTahunDariBulan(bulan){
+  var tahun = Math.round((bulan / 12) * 10) / 10;
+  return String(tahun).replace('.', ',');
+}
+
+$('inTenor').addEventListener('input', function(){
+  var bulan = parseInt(angkaSaja($('inTenor').value), 10);
+  $('petunjukTenor').textContent = bulan ? ('= ' + formatTahunDariBulan(bulan) + ' tahun') : '';
+});
+
 $('btnHitung').addEventListener('click', function(){
   var cicilan = parseFloat(angkaSaja($('inCicilan').value));
   var bunga = parseFloat(desimalSaja($('inBunga').value));
-  var tenor = parseFloat(desimalSaja($('inTenor').value));
+  var sisaBulan = parseInt(angkaSaja($('inTenor').value), 10);
 
   var galatEl = $('pesanGalatKalkulator');
   galatEl.innerHTML = '';
 
-  if(!cicilan || cicilan <= 0 || !bunga || bunga <= 0 || !tenor || tenor <= 0){
+  if(!cicilan || cicilan <= 0 || !bunga || bunga <= 0 || !sisaBulan || sisaBulan <= 0){
     galatEl.innerHTML = '<div class="pesan-galat">Isi ketiga angka dengan nilai lebih dari nol.</div>';
+    return;
+  }
+
+  if(sisaBulan < 1 || sisaBulan > 360){
+    galatEl.innerHTML = '<div class="pesan-galat">Sisa tenor harus antara 1 dan 360 bulan.</div>';
     return;
   }
 
@@ -1200,13 +1339,12 @@ $('btnHitung').addEventListener('click', function(){
     return;
   }
 
-  var bulan = tenor * 12;
-  var pokok = sisaPokok(cicilan, bunga, bulan);
-  var cicilanBaru = angsuran(pokok, PATOKAN, bulan);
+  var pokok = sisaPokok(cicilan, bunga, sisaBulan);
+  var cicilanBaru = angsuran(pokok, PATOKAN, sisaBulan);
   var hemat = cicilan - cicilanBaru;
 
   hasilKalkulator = {
-    cicilan: cicilan, bunga: bunga, tenor: tenor,
+    cicilan: cicilan, bunga: bunga, sisaBulan: sisaBulan,
     pokok: pokok, cicilanBaru: cicilanBaru, hemat: hemat
   };
 
@@ -1223,11 +1361,11 @@ function tampilkanHasilKalkulator(h){
   $('kkPatokan').textContent = PATOKAN + '%';
 
   var setahun = h.hemat * 12;
-  var totalTenor = h.hemat * h.tenor * 12;
+  var totalSisaBulan = h.hemat * h.sisaBulan;
 
   animasiAngka($('angkaHemat'), h.hemat, 1100, function(v){ return rp(v); });
   animasiAngka($('hematSetahun'), setahun, 1100, function(v){ return rpk(v); });
-  animasiAngka($('hematTotal'), totalTenor, 1100, function(v){ return rpk(v); });
+  animasiAngka($('hematTotal'), totalSisaBulan, 1100, function(v){ return rpk(v); });
 
   $('blokHasil').scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth', block:'start'});
 }
@@ -1252,7 +1390,7 @@ var PERTANYAAN = [
   { key:'bank', teks: function(){ return 'KPR Anda di bank mana sekarang?'; }, jenis:'pilihan',
     opsi: ['BCA','Mandiri','BNI','BRI','BTN','CIMB Niaga','Permata','Danamon','Lainnya'] },
   { key:'tahunAkad', teks: function(){ return 'Tahun berapa akad KPR-nya?'; }, jenis:'angka' },
-  { key:'plafon', teks: function(){ return 'Berapa plafon awalnya waktu akad? Bukan sisanya sekarang ya.'; }, jenis:'angka',
+  { key:'plafon', teks: function(){ return 'Berapa plafon awalnya waktu akad? Bukan sisanya sekarang ya.'; }, jenis:'rupiah',
     sisipan: 'Banyak yang tidak hafal angka ini. Bisa dicek di perjanjian kredit atau aplikasi bank Anda.' },
   { key:'penghasilan', teks: function(){ return 'Status penghasilan Anda?'; }, jenis:'pilihan',
     opsi: ['Karyawan tetap','Karyawan kontrak','Wiraswasta','Profesional'] },
@@ -1392,6 +1530,21 @@ function tampilkanAreaJawab(p){
     input.className = 'isian';
     input.type = 'text';
     if(p.jenis === 'angka'){ input.inputMode = 'numeric'; }
+
+    var inputHost = input;
+    if(p.jenis === 'rupiah'){
+      pasangFormatRupiah(input);
+      var wadah = document.createElement('div');
+      wadah.className = 'wadah-rp';
+      wadah.style.flex = '1';
+      var awalan = document.createElement('span');
+      awalan.className = 'awalan-rp';
+      awalan.textContent = 'Rp';
+      wadah.appendChild(awalan);
+      wadah.appendChild(input);
+      inputHost = wadah;
+    }
+
     var btn = document.createElement('button');
     btn.className = 'btn-kirim';
     btn.textContent = 'Kirim';
@@ -1406,7 +1559,7 @@ function tampilkanAreaJawab(p){
       if(e.key === 'Enter') kirim();
     });
 
-    baris.appendChild(input);
+    baris.appendChild(inputHost);
     baris.appendChild(btn);
     dalam.appendChild(baris);
     setTimeout(function(){ input.focus(); }, 50);
@@ -1479,7 +1632,7 @@ function finalisasiKasusBaru(){
 
   var cicilan = hasilKalkulator ? hasilKalkulator.cicilan : 0;
   var bunga = hasilKalkulator ? hasilKalkulator.bunga : 0;
-  var tenor = hasilKalkulator ? hasilKalkulator.tenor : 0;
+  var sisaBulan = hasilKalkulator ? hasilKalkulator.sisaBulan : 0;
   var pokok = hasilKalkulator ? hasilKalkulator.pokok : 0;
   var cicilanBaru = hasilKalkulator ? hasilKalkulator.cicilanBaru : 0;
   var hemat = hasilKalkulator ? hasilKalkulator.hemat : 0;
@@ -1496,7 +1649,7 @@ function finalisasiKasusBaru(){
     masalahLain: d.masalahLain,
     cicilan: cicilan,
     bunga: bunga,
-    tenor: tenor,
+    sisaBulan: sisaBulan,
     sisaPokokEst: pokok,
     cicilanBaruEst: cicilanBaru,
     hematEst: hemat,
@@ -1545,7 +1698,7 @@ function tampilkanHalamanProses(k){
     ['Bank', k.bank],
     ['Cicilan sekarang', rp(k.cicilan)],
     ['Bunga', k.bunga + '%'],
-    ['Sisa tenor', k.tenor + ' tahun'],
+    ['Sisa tenor', k.sisaBulan + ' bulan'],
     ['Umur KPR', k.umur + ' tahun']
   ];
   ringkas.innerHTML = baris.map(function(b){
@@ -1559,7 +1712,7 @@ function tampilkanHalamanProses(k){
     'Plafon awal: ' + rp(k.plafon) + '\n' +
     'Cicilan sekarang: ' + rp(k.cicilan) + '\n' +
     'Bunga berjalan: ' + k.bunga + '%\n' +
-    'Sisa tenor: ' + k.tenor + ' tahun\n' +
+    'Sisa tenor: ' + k.sisaBulan + ' bulan\n' +
     'Status penghasilan: ' + k.penghasilan + '\n' +
     'Riwayat pembayaran: ' + k.riwayat + '\n' +
     'Masalah finansial lain di perbankan: ' + (k.masalahLain === 'ya' ? 'Ada' : 'Tidak ada') + '\n\n' +
@@ -1576,16 +1729,15 @@ function tampilkanHalamanProses(k){
    ========================================================= */
 function buatDataContoh(){
   var contoh = [
-    { nama:'Budi Santoso (contoh)', wa:'081200000001', bank:'BCA', tahunAkad:2017, plafon:1800000000, penghasilan:'Karyawan tetap', riwayat:'Selalu lancar', masalahLain:'tidak', cicilan:16500000, bunga:10.5, tenor:11, tahap:0, hariGerak:2 },
-    { nama:'Sari Melati (contoh)', wa:'081200000002', bank:'CIMB Niaga', tahunAkad:2016, plafon:2400000000, penghasilan:'Profesional', riwayat:'Selalu lancar', masalahLain:'tidak', cicilan:21000000, bunga:11, tenor:9, tahap:2, hariGerak:12 },
-    { nama:'Rina Wijaya (contoh)', wa:'081200000003', bank:'Mandiri', tahunAkad:2019, plafon:750000000, penghasilan:'Wiraswasta', riwayat:'Pernah telat, kini lancar', masalahLain:'tidak', cicilan:7200000, bunga:9, tenor:9, tahap:1, hariGerak:4 },
-    { nama:'Andi Prasetyo (contoh)', wa:'081200000004', bank:'BTN', tahunAkad:2021, plafon:1200000000, penghasilan:'Karyawan tetap', riwayat:'Sedang menunggak', masalahLain:'ya', cicilan:11000000, bunga:11, tenor:14, tahap:0, hariGerak:1 }
+    { nama:'Budi Santoso (contoh)', wa:'081200000001', bank:'BCA', tahunAkad:2017, plafon:1800000000, penghasilan:'Karyawan tetap', riwayat:'Selalu lancar', masalahLain:'tidak', cicilan:16500000, bunga:10.5, sisaBulan:132, tahap:0, hariGerak:2 },
+    { nama:'Sari Melati (contoh)', wa:'081200000002', bank:'CIMB Niaga', tahunAkad:2016, plafon:2400000000, penghasilan:'Profesional', riwayat:'Selalu lancar', masalahLain:'tidak', cicilan:21000000, bunga:11, sisaBulan:108, tahap:2, hariGerak:12 },
+    { nama:'Rina Wijaya (contoh)', wa:'081200000003', bank:'Mandiri', tahunAkad:2019, plafon:750000000, penghasilan:'Wiraswasta', riwayat:'Pernah telat, kini lancar', masalahLain:'tidak', cicilan:7200000, bunga:9, sisaBulan:108, tahap:1, hariGerak:4 },
+    { nama:'Andi Prasetyo (contoh)', wa:'081200000004', bank:'BTN', tahunAkad:2021, plafon:1200000000, penghasilan:'Karyawan tetap', riwayat:'Sedang menunggak', masalahLain:'ya', cicilan:11000000, bunga:11, sisaBulan:168, tahap:0, hariGerak:1 }
   ];
 
   contoh.forEach(function(c){
-    var bulan = c.tenor * 12;
-    var pokok = sisaPokok(c.cicilan, c.bunga, bulan);
-    var cicilanBaru = angsuran(pokok, PATOKAN, bulan);
+    var pokok = sisaPokok(c.cicilan, c.bunga, c.sisaBulan);
+    var cicilanBaru = angsuran(pokok, PATOKAN, c.sisaBulan);
     var hemat = c.cicilan - cicilanBaru;
 
     var d = {
@@ -1599,7 +1751,7 @@ function buatDataContoh(){
       nama: c.nama, wa: c.wa, bank: c.bank,
       tahunAkad: c.tahunAkad, plafon: c.plafon,
       penghasilan: c.penghasilan, riwayat: c.riwayat, masalahLain: c.masalahLain,
-      cicilan: c.cicilan, bunga: c.bunga, tenor: c.tenor,
+      cicilan: c.cicilan, bunga: c.bunga, sisaBulan: c.sisaBulan,
       sisaPokokEst: pokok, cicilanBaruEst: cicilanBaru, hematEst: hemat,
       jalur: hasilNilai.jalur, alasan: hasilNilai.alasan,
       umur: hasilNilai.umur, selisih: hasilNilai.selisih,
@@ -1844,7 +1996,7 @@ function bukaDetailKasus(k){
     ['Estimasi sisa pokok', rp(k.sisaPokokEst)],
     ['Plafon awal', rp(k.plafon)],
     ['Tahun akad', k.tahunAkad + ' (' + k.umur + ' tahun)'],
-    ['Sisa tenor', k.tenor + ' tahun'],
+    ['Sisa tenor', k.sisaBulan + ' bulan'],
     ['Selisih bunga', k.selisih.toFixed(1) + '%'],
     ['Penghasilan', k.penghasilan],
     ['Riwayat bayar', k.riwayat],
@@ -1896,7 +2048,7 @@ $('btnUnduhCsv').addEventListener('click', function(){
 
   var daftar = window._daftarTersaringKonsultan || KASUS;
   var kolom = ['Nama','WhatsApp','Bank','Tahun akad','Umur KPR (th)','Plafon awal',
-    'Cicilan sekarang','Bunga (%)','Sisa tenor (th)','Estimasi sisa pokok',
+    'Cicilan sekarang','Bunga (%)','Sisa tenor (bulan)','Estimasi sisa pokok',
     'Estimasi cicilan baru','Estimasi hemat/bln','Selisih bunga (%)','Penghasilan',
     'Riwayat bayar','Masalah bank lain','Jalur','Tahap','Hari tidak bergerak','Alasan penilaian'];
 
@@ -1910,7 +2062,7 @@ $('btnUnduhCsv').addEventListener('click', function(){
   daftar.forEach(function(k){
     var row = [
       k.nama, k.wa, k.bank, k.tahunAkad, k.umur, k.plafon,
-      k.cicilan, k.bunga, k.tenor, Math.round(k.sisaPokokEst),
+      k.cicilan, k.bunga, k.sisaBulan, Math.round(k.sisaPokokEst),
       Math.round(k.cicilanBaruEst), Math.round(k.hematEst), k.selisih.toFixed(1),
       k.penghasilan, k.riwayat, (k.masalahLain==='ya'?'Ada':'Tidak ada'),
       labelJalur(k.jalur), TAHAP[k.tahap], hariDiam(k), k.alasan.join(' | ')
@@ -1966,7 +2118,7 @@ function renderProspek(){
     div.innerHTML =
       '<div class="baris-atas-kartu"><div class="nama-klien">'+escapeHtml(tampilData.inisial)+'</div></div>' +
       '<div class="baris-info">'+escapeHtml(k.penghasilan)+' · Plafon '+rpk(k.plafon)+'</div>' +
-      '<div class="baris-info">Umur KPR '+k.umur+' th · Sisa tenor '+k.tenor+' th</div>' +
+      '<div class="baris-info">Umur KPR '+k.umur+' th · Sisa tenor '+k.sisaBulan+' bln</div>' +
       '<div class="baris-info">Bunga '+k.bunga+'% · Riwayat: '+escapeHtml(k.riwayat)+'</div>' +
       '<div class="lencana-baris"><span class="lencana lencana-jalur-'+k.jalur+'">'+labelJalur(k.jalur)+'</span></div>' +
       '<div class="hemat-kasus">Sisa pokok est. '+rpk(k.sisaPokokEst)+'</div>';
@@ -1983,7 +2135,7 @@ function bukaDetailProspek(k){
     ['Penghasilan', k.penghasilan],
     ['Plafon awal', rpk(k.plafon)],
     ['Umur KPR', k.umur + ' tahun'],
-    ['Sisa tenor', k.tenor + ' tahun'],
+    ['Sisa tenor', k.sisaBulan + ' bulan'],
     ['Riwayat bayar', k.riwayat],
     ['Estimasi sisa pokok', rpk(k.sisaPokokEst)],
     ['Bunga berjalan', k.bunga + '%']
